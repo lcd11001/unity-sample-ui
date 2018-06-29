@@ -208,12 +208,24 @@ public partial class MenuController : MonoBehaviour
 
 	public void StartSlideIn(Button button)
 	{
+		ForceStartSlideIn(button, false);
+	}
+
+	private void ForceStartSlideIn(Button button, bool force)
+	{
 		MenuItem item  = FindItemFrom(button);
 		if (item == null)
 		{
 			Debug.LogError("StartSlideIn fail " + button.name);
 			return;
 		}
+
+		if (!force && firstCircleItem != item)
+		{
+			Debug.LogWarning("StartSlideIn not selected " + button.name);
+			return;
+		}
+
 		AnimSlideIn a = new AnimSlideIn();
 		if (a.StartAnim(item))
 		{
@@ -226,6 +238,11 @@ public partial class MenuController : MonoBehaviour
 
 	public void StartSlideOut(Button button)
 	{
+		ForceStartSlideOut(button, false);
+	}
+
+	private void ForceStartSlideOut(Button button, bool force)
+	{
 		MenuItem item  = FindItemFrom(button);
 		if (item == null)
 		{
@@ -233,7 +250,7 @@ public partial class MenuController : MonoBehaviour
 			return;
 		}
 
-		if (firstCircleItem != item)
+		if (!force && firstCircleItem != item)
 		{
 			Debug.LogWarning("StartSlideOut not selected " + button.name);
 			return;
@@ -258,10 +275,10 @@ public partial class MenuController : MonoBehaviour
 			Debug.LogWarning("StartRotate cancel " + button.name);
 			return;
 		}
-		if (firstCircleItem != null)
-		{
-			StartSlideIn(firstCircleItem.button);
-		}
+		// if (firstCircleItem != null)
+		// {
+		// 	ForceStartSlideIn(firstCircleItem.button, true);
+		// }
 		
 		firstCircleItem = selected;
 
@@ -271,44 +288,50 @@ public partial class MenuController : MonoBehaviour
 		float deltaAngle = 90 - localAngle + offsetAngle;
 
 		List<MenuItem> list = FindSiblingFrom(button);
-
-		lock(animParallel)
+		
+		foreach(MenuItem child in list)
 		{
-			foreach(MenuItem child in list)
+			localAngle = Vector3.SignedAngle(child.button.transform.localPosition, Vector3.right, Vector3.back);
+
+			child.startAngle = localAngle;
+			child.endAngle = localAngle + deltaAngle;
+			child.angle = child.endAngle - offsetAngle;
+
+			if (child == firstCircleItem)
 			{
-				localAngle = Vector3.SignedAngle(child.button.transform.localPosition, Vector3.right, Vector3.back);
-
-				child.startAngle = localAngle;
-				child.endAngle = localAngle + deltaAngle;
-				child.angle = child.endAngle - offsetAngle;
-
-				if (child == firstCircleItem)
+				LinkedList<Anim> sequence = new LinkedList<Anim>();
+				AnimRotate rotate = new AnimRotate();
+				if (rotate.StartAnim(child))
 				{
-					LinkedList<Anim> sequence = new LinkedList<Anim>();
-					AnimRotate rotate = new AnimRotate();
-					if (rotate.StartAnim(child))
-					{
-						sequence.AddLast(rotate);
-					}
+					sequence.AddLast(rotate);
+				}
 
-					AnimSlideOut slideOut = new AnimSlideOut();
-					if (slideOut.StartAnim(child))
-					{
-						sequence.AddLast(slideOut);
-					}
+				AnimSlideOut slideOut = new AnimSlideOut();
+				if (slideOut.StartAnim(child))
+				{
+					sequence.AddLast(slideOut);
+				}
 
+				lock(animParallelSequence)
+				{
 					animParallelSequence.Add(sequence);
 				}
-				else
+			}
+			else
+			{
+				AnimRotate a = new AnimRotate();
+				if (a.StartAnim(child))
 				{
-					AnimRotate a = new AnimRotate();
-					if (a.StartAnim(child))
+					lock(animParallel)
 					{
 						animParallel.Add(a);
 					}
 				}
+
+				ForceStartSlideIn(child.button, true);
 			}
 		}
+		
 	}
 
 	MenuItem FindItemFrom(Button button)
