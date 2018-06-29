@@ -10,7 +10,7 @@ abstract public class Anim
     protected float offsetRadius, fromRadius, toRadius;
     protected float fromAlpha, toAlpha;
     protected float fromAngle, toAngle;
-    protected float deltaAngle, offsetAngle;
+    protected float offsetAngle;
     protected bool isRunning;
 
     protected float ratio, radius, alpha, angle;

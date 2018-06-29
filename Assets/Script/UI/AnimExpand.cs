@@ -25,9 +25,6 @@ public class AnimExpand  : Anim
 		fromAlpha = item.startAlpha;
 		toAlpha = item.endAlpha;
 
-        deltaAngle = Mathf.PI * 2 / item.children.Count;
-        offsetAngle = item.angle * Mathf.PI / 180;
-
         UpdateAnim(fromRadius, fromAlpha, 0);
 
         return true;
@@ -38,7 +35,8 @@ public class AnimExpand  : Anim
         int i = 0;
         foreach(MenuItem child in item.children)
         {
-            Vector3 pos = MakePos(radius, i * deltaAngle + offsetAngle);
+            offsetAngle = (item.angle + child.angle) * Mathf.PI / 180;
+            Vector3 pos = MakePos(radius, offsetAngle);
             child.button.transform.localPosition = pos;
 
             CanvasGroup canvasFadeIn = child.button.GetComponent<CanvasGroup>();

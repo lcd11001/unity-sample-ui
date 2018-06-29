@@ -18,7 +18,15 @@ public partial class MenuController : MonoBehaviour
 		animParallel = new List<Anim>();
 		animParallelSequence = new List< LinkedList<Anim> >();
 
-		firstCircleItem = menu.children[0];
+		firstCircleItem = null;
+
+		float deltaAngle = 360.0f / menu.children.Count;
+		int i = 0;
+		foreach(MenuItem child in menu.children)
+        {
+			child.angle = i * deltaAngle;
+            i ++;
+        }
 	}
 	
 	// Update is called once per frame
@@ -155,12 +163,45 @@ public partial class MenuController : MonoBehaviour
 			Debug.LogError("StartCollapse fail " + button.name);
 			return;
 		}
-		AnimCollapse a = new AnimCollapse();
-		if (a.StartAnim(item))
+
+
+		bool hasSequence = false;
+		if (firstCircleItem != null)
 		{
-			lock(animParallel)
+			AnimSlideIn b = new AnimSlideIn();
+			if (b.StartAnim(firstCircleItem))
 			{
-				animParallel.Add(a);
+				hasSequence = true;
+				LinkedList<Anim> sequence = new LinkedList<Anim>();
+
+				lock(animParallelSequence)
+				{
+					sequence.AddLast(b);
+
+					AnimCollapse c = new AnimCollapse();
+					if (c.StartAnim(item))
+					{
+						sequence.AddLast(c);
+					}
+
+					animParallelSequence.Add(sequence);
+				}
+				
+			}
+
+			firstCircleItem = null;
+		}
+		
+		
+		if (!hasSequence)
+		{
+			AnimCollapse a = new AnimCollapse();
+			if (a.StartAnim(item))
+			{
+				lock(animParallel)
+				{
+					animParallel.Add(a);
+				}
 			}
 		}
 	}
@@ -217,7 +258,11 @@ public partial class MenuController : MonoBehaviour
 			Debug.LogWarning("StartRotate cancel " + button.name);
 			return;
 		}
-		StartSlideIn(firstCircleItem.button);
+		if (firstCircleItem != null)
+		{
+			StartSlideIn(firstCircleItem.button);
+		}
+		
 		firstCircleItem = selected;
 
 		MenuItem parent = FindParentFrom(button);
@@ -235,6 +280,7 @@ public partial class MenuController : MonoBehaviour
 
 				child.startAngle = localAngle;
 				child.endAngle = localAngle + deltaAngle;
+				child.angle = child.endAngle - offsetAngle;
 
 				if (child == firstCircleItem)
 				{
