@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/DemoScene.unity
-    guid: ef97109e817f1714dadca3d29c002e1d
-  - enabled: 1
-    path: Assets/Unity Sample UI/Scenes/RenderTexture.unity
-    guid: d5545059c6381d848ab3d612c68f2669
+    path: Assets/CircleMenu.unity
+    guid: 15c8fcba375a95d40aee282947700e7f
   m_configObjects: {}
