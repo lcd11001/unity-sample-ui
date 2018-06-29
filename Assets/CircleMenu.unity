@@ -1850,7 +1850,7 @@ MonoBehaviour:
         angle: 0
       duration: 0.3
       startRadius: 0
-      endRadius: 90
+      endRadius: 80
       startAlpha: 0
       endAlpha: 1
       startAngle: 0
@@ -1888,8 +1888,8 @@ MonoBehaviour:
         direction: {x: 0, y: 0, z: 0}
         angle: 0
       duration: 0.3
-      startRadius: 90
-      endRadius: 180
+      startRadius: 80
+      endRadius: 160
       startAlpha: 0
       endAlpha: 1
       startAngle: 0
@@ -2941,7 +2941,7 @@ RectTransform:
   m_GameObject: {fileID: 2045375945}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 770414734}
   - {fileID: 694338855}
@@ -2949,11 +2949,11 @@ RectTransform:
   m_Father: {fileID: 556754727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -150, y: 150}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 1, y: 0}
 --- !u!1 &2050776808
 GameObject:
   m_ObjectHideFlags: 0
