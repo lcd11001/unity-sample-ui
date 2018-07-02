@@ -45,11 +45,7 @@ public class AnimFadeOut  : Anim
 
 		UpdateAnim(0, toAlpha, 0);
 
-		CanvasGroup canvasFadeOut = item.button.GetComponent<CanvasGroup>();
-		MakeAlpha(canvasFadeOut, toAlpha, false);
-
 		CanvasGroup canvasFadeIn = item.subButton.GetComponent<CanvasGroup>();
-		MakeAlpha(canvasFadeIn, toAlpha, true);
 		MakeClickable(canvasFadeIn, true);
 	}
 	
