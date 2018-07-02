@@ -37,6 +37,11 @@ public class AnimRotate  : Anim
         float radian = angle * Mathf.PI / 180;
         Vector3 pos = MakePos(localRadius, radian);
         item.button.transform.localPosition = pos;
+
+        if (item.subButton)
+        {
+            item.subButton.transform.localPosition = pos;
+        }
     }
 
     override protected void StopAnim()

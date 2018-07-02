@@ -38,6 +38,10 @@ public class AnimExpand  : Anim
             offsetAngle = (item.angle + child.angle) * Mathf.PI / 180;
             Vector3 pos = MakePos(radius, offsetAngle);
             child.button.transform.localPosition = pos;
+            if (child.subButton)
+            {
+                child.subButton.transform.localPosition = pos;
+            }
 
             CanvasGroup canvasFadeIn = child.button.GetComponent<CanvasGroup>();
             MakeAlpha(canvasFadeIn, alpha, false);
