@@ -7,7 +7,7 @@ public class AnimCollapse  : Anim
 {
     override public bool StartAnim(MenuItem item)
     {
-        if (isRunning || item.isOpened == false)
+        if (isRunning || item.isOpened == false || item.children.Count == 0)
         {
             return false;
         }

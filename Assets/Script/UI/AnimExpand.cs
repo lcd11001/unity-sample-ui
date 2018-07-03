@@ -7,7 +7,7 @@ public class AnimExpand  : Anim
 {
     override public bool StartAnim(MenuItem item)
     {
-        if (isRunning || item.isOpened)
+        if (isRunning || item.isOpened || item.children.Count == 0)
         {
             return false;
         }
