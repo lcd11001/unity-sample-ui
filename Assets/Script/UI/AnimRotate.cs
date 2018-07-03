@@ -27,7 +27,7 @@ public class AnimRotate  : Anim
 
         UpdateAnim(0, 0, fromAngle);
 
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), false);
+        MakeClickable(item, false);
 
         return true;
     }
@@ -50,6 +50,6 @@ public class AnimRotate  : Anim
 
         UpdateAnim(0, 0, toAngle);
 
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), true);
+        MakeClickable(item, true);
     }
 }

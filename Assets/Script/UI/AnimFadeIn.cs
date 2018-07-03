@@ -23,8 +23,8 @@ public class AnimFadeIn  : Anim
 		toAlpha = item.endAlpha;
 
 		UpdateAnim(0, fromAlpha, 0);
-		CanvasGroup canvasFadeOut = item.subButton.GetComponent<CanvasGroup>();
-		MakeClickable(canvasFadeOut, false);
+		
+		MakeClickable(item, false);
 
 		return true;
 	}
@@ -32,10 +32,10 @@ public class AnimFadeIn  : Anim
 	override protected void UpdateAnim(float radius, float alpha, float angle)
 	{
 		CanvasGroup canvasFadeIn = item.button.GetComponent<CanvasGroup>();
-		MakeAlpha(canvasFadeIn, alpha, false);
+		canvasFadeIn.alpha =  alpha;
 		
 		CanvasGroup canvasFadeOut = item.subButton.GetComponent<CanvasGroup>();
-		MakeAlpha(canvasFadeOut, alpha, true);
+		canvasFadeOut.alpha = 1 - alpha;
 	}
 
 	override protected void StopAnim()
@@ -44,7 +44,7 @@ public class AnimFadeIn  : Anim
 
 		UpdateAnim(0, toAlpha, 0);
 
-		CanvasGroup canvasFadeIn = item.button.GetComponent<CanvasGroup>();
-		MakeClickable(canvasFadeIn, true);
+		item.isSubButtonActive = false;
+		MakeClickable(item, true);
 	}
 }

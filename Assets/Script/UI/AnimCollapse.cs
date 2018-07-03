@@ -43,8 +43,7 @@ public class AnimCollapse  : Anim
                 child.subButton.transform.localPosition = pos;
             }
 
-            CanvasGroup canvasFadeOut = child.button.GetComponent<CanvasGroup>();
-            MakeAlpha(canvasFadeOut, alpha, false);
+            MakeAlpha(child, alpha, false);
 
             i ++;
         }
@@ -59,7 +58,7 @@ public class AnimCollapse  : Anim
 
         foreach(MenuItem child in item.children)
         {
-            MakeClickable(child.button.GetComponent<CanvasGroup>(), false);
+            MakeClickable(child, false);
         }
     }
 }

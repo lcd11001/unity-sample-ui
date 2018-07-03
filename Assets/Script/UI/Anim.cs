@@ -81,8 +81,28 @@ abstract public class Anim
         // for removing this anim from the list
         ratio = 1;
     }
+
+    protected void MakeClickable(MenuItem item, bool check, bool useRecursive = false)
+    {
+        if (item.isSubButtonActive)
+        {
+            if (item.subButton)
+            {
+                MakeClickable(item.subButton.GetComponent<CanvasGroup>(), check, useRecursive);
+            }
+            MakeClickable(item.button.GetComponent<CanvasGroup>(), false, useRecursive);
+        }
+        else
+        {
+            MakeClickable(item.button.GetComponent<CanvasGroup>(), check, useRecursive);
+            if (!isRunning && item.subButton)
+            {
+                MakeClickable(item.subButton.GetComponent<CanvasGroup>(), false, useRecursive);
+            }
+        }
+    }
     
-    protected void MakeClickable(CanvasGroup canvas, bool check, bool useRecursive = false)
+    private void MakeClickable(CanvasGroup canvas, bool check, bool useRecursive)
 	{
 		if (canvas == null)
 		{
@@ -102,7 +122,23 @@ abstract public class Anim
 		}
 	}
 
-	protected void MakeAlpha(CanvasGroup canvas, float alpha, bool revert)
+    protected void MakeAlpha(MenuItem item, float alpha, bool revert)
+    {
+        if (item.isSubButtonActive)
+        {
+            if (item.subButton)
+            {
+                MakeAlpha(item.subButton.GetComponent<CanvasGroup>(), alpha, revert);
+            }
+        }
+        else
+        {
+            MakeAlpha(item.button.GetComponent<CanvasGroup>(), alpha, revert);
+        }
+        
+    }
+
+	private void MakeAlpha(CanvasGroup canvas, float alpha, bool revert)
 	{
 		if (canvas == null)
 		{

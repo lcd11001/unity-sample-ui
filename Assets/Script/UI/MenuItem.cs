@@ -8,6 +8,7 @@ public class MenuItem
 {
 	public Button button;
     public Button subButton;
+	public bool isSubButtonActive;
 	public bool isOpened;
 	public List<MenuItem> children;
 	public float duration;

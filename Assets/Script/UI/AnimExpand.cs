@@ -43,8 +43,7 @@ public class AnimExpand  : Anim
                 child.subButton.transform.localPosition = pos;
             }
 
-            CanvasGroup canvasFadeIn = child.button.GetComponent<CanvasGroup>();
-            MakeAlpha(canvasFadeIn, alpha, false);
+            MakeAlpha(child, alpha, false);
 
             i ++;
         }
@@ -59,7 +58,7 @@ public class AnimExpand  : Anim
 
         foreach(MenuItem child in item.children)
         {
-            MakeClickable(child.button.GetComponent<CanvasGroup>(), true);
+            MakeClickable(child, true);
         }
     }
 }

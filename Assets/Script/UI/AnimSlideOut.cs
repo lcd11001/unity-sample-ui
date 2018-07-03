@@ -27,7 +27,7 @@ public class AnimSlideOut  : Anim
 		toAlpha = item.endAlpha;
 
         UpdateAnim(fromRadius, fromAlpha, 0);
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), false);
+        MakeClickable(item, false);
 
         return true;
     }
@@ -42,8 +42,7 @@ public class AnimSlideOut  : Anim
             Vector3 pos = (radius * ratio + offsetRadius) * item.direction;
             child.button.transform.localPosition = pos;
 
-            CanvasGroup canvasFadeOut = child.button.GetComponent<CanvasGroup>();
-            MakeAlpha(canvasFadeOut, alpha, false);
+            MakeAlpha(child, alpha, false);
 
             i ++;
         }
@@ -56,11 +55,11 @@ public class AnimSlideOut  : Anim
 
         UpdateAnim(toRadius, toAlpha, 0);
 
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), true);
+        MakeClickable(item, true);
 
         foreach(MenuItem child in item.children)
         {
-            MakeClickable(child.button.GetComponent<CanvasGroup>(), true);
+            MakeClickable(child, true);
         }
     }
 }

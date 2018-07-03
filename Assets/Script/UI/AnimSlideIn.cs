@@ -28,7 +28,7 @@ public class AnimSlideIn  : Anim
 
         UpdateAnim(fromRadius, fromAlpha, 0);
 
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), false);
+        MakeClickable(item, false);
 
         return true;
     }
@@ -43,8 +43,7 @@ public class AnimSlideIn  : Anim
             Vector3 pos = (radius * ratio + offsetRadius) * item.direction;
             child.button.transform.localPosition = pos;
 
-            CanvasGroup canvasFadeIn = child.button.GetComponent<CanvasGroup>();
-            MakeAlpha(canvasFadeIn, alpha, false);
+            MakeAlpha(child, alpha, false);
 
             i ++;
         }
@@ -57,11 +56,11 @@ public class AnimSlideIn  : Anim
 
         UpdateAnim(toRadius, toAlpha, 0);
 
-        MakeClickable(item.button.GetComponent<CanvasGroup>(), true);
+        MakeClickable(item, true);
 
         foreach(MenuItem child in item.children)
         {
-            MakeClickable(child.button.GetComponent<CanvasGroup>(), false);
+            MakeClickable(child, false);
         }
     }
 }

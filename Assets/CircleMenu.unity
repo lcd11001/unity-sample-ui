@@ -1462,6 +1462,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1393057892}
+        m_MethodName: StartRotate
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1239844993}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &954153235
@@ -2146,10 +2157,12 @@ MonoBehaviour:
   menu:
     button: {fileID: 694338860}
     subButton: {fileID: 710310802}
+    isSubButtonActive: 0
     isOpened: 0
     children:
     - button: {fileID: 1936304703}
       subButton: {fileID: 0}
+      isSubButtonActive: 0
       isOpened: 0
       children: []
       duration: 0.3
@@ -2163,6 +2176,7 @@ MonoBehaviour:
       angle: 0
     - button: {fileID: 52939282}
       subButton: {fileID: 0}
+      isSubButtonActive: 0
       isOpened: 0
       children: []
       duration: 0.3
@@ -2176,10 +2190,12 @@ MonoBehaviour:
       angle: 0
     - button: {fileID: 1891210931}
       subButton: {fileID: 0}
+      isSubButtonActive: 0
       isOpened: 0
       children:
       - button: {fileID: 1847603515}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2193,6 +2209,7 @@ MonoBehaviour:
         angle: 0
       - button: {fileID: 1447010892}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2206,6 +2223,7 @@ MonoBehaviour:
         angle: 0
       - button: {fileID: 1188342847}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2228,6 +2246,7 @@ MonoBehaviour:
       angle: 0
     - button: {fileID: 1239844993}
       subButton: {fileID: 954153234}
+      isSubButtonActive: 0
       isOpened: 0
       children: []
       duration: 0.3
@@ -2241,10 +2260,12 @@ MonoBehaviour:
       angle: 0
     - button: {fileID: 1926966385}
       subButton: {fileID: 0}
+      isSubButtonActive: 0
       isOpened: 0
       children:
       - button: {fileID: 1555043373}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2258,6 +2279,7 @@ MonoBehaviour:
         angle: 0
       - button: {fileID: 1354770757}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2280,10 +2302,12 @@ MonoBehaviour:
       angle: 0
     - button: {fileID: 2069786410}
       subButton: {fileID: 0}
+      isSubButtonActive: 0
       isOpened: 0
       children:
       - button: {fileID: 2138306550}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2297,6 +2321,7 @@ MonoBehaviour:
         angle: 0
       - button: {fileID: 437173382}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
@@ -2310,6 +2335,7 @@ MonoBehaviour:
         angle: 0
       - button: {fileID: 1826013514}
         subButton: {fileID: 0}
+        isSubButtonActive: 0
         isOpened: 0
         children: []
         duration: 0
