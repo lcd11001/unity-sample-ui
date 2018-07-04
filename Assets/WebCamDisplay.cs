@@ -14,18 +14,33 @@ public class WebCamDisplay : MonoBehaviour {
 	private bool isPlaying;
 	private int centerX, centerY;
 	private int camW, camH;
+	private bool camEnable;
+
+#if UNITY_EDITOR
+	private Color camFakeColor;
+	private float camTimer;
+#endif
 
 	void Awake () 
 	{
-		camW = Screen.width;
-		camH = Screen.height;
+		camEnable = WebCamTexture.devices.Length > 0;
+		if (camEnable)
+		{
+			camW = Screen.width;
+			camH = Screen.height;
 
-		wct = new WebCamTexture(camW, camH);
-		centerX = camW / 2;
-		centerY = camH / 2;
+			wct = new WebCamTexture(camW, camH);
+			centerX = camW / 2;
+			centerY = camH / 2;
 
-		this.GetComponent<MeshRenderer>().material.mainTexture = wct;
+			this.GetComponent<MeshRenderer>().material.mainTexture = wct;
+		}
+		
 		isPlaying = false;
+
+#if UNITY_EDITOR
+		camFakeColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+#endif
 	}
 
 	void Start() 
@@ -36,24 +51,58 @@ public class WebCamDisplay : MonoBehaviour {
 
 	public void Play()
 	{
-		wct.Play();
-		isPlaying = true;
+		if (camEnable)
+		{
+			wct.Play();
+			isPlaying = true;
+		}
+
+#if UNITY_EDITOR
+		camTimer = 0;
+#endif
 	}
 
 	public void Stop()
 	{
-		isPlaying = false;
-		wct.Stop();
+		if (camEnable)
+		{
+			isPlaying = false;
+			wct.Stop();
+		}
+		
 	}
 
 	private void Update() 
 	{
-		if (picker && isPlaying)
+#if UNITY_EDITOR
+		if (!camEnable)
 		{
-			Image img = picker.GetComponent<Image>();
-			img.color = wct.GetPixel(centerX, centerY);
+			camTimer += Time.deltaTime;
+			if (camTimer > 3)
+			{
+				camFakeColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+				ApplyColor(camFakeColor);
+
+				camTimer = 0;
+			}
+
+			return;
+		}
+#endif
+		if (isPlaying)
+		{
+			ApplyColor( wct.GetPixel(centerX, centerY) );
 
 			transform.rotation = baseRotation * Quaternion.AngleAxis(wct.videoRotationAngle, Vector3.up);
+		}
+	}
+
+	private void ApplyColor(Color c)
+	{
+		if (picker)
+		{
+			Image img = picker.GetComponent<Image>();
+			img.color = c;
 		}
 	}
 }
