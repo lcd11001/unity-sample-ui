@@ -12,7 +12,7 @@ public partial class MenuController : MonoBehaviour
 	List<Anim> animParallel;
 	List<LinkedList<Anim>> animParallelSequence;
 
-	void Start() 
+	void Awake() 
 	{
 		animSequence = new LinkedList<Anim>();
 		animParallel = new List<Anim>();
