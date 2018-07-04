@@ -5,7 +5,8 @@ using UnityEngine;
 public class AutoFitSize : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void Awake ()
+	{
 		Camera cam = Camera.main;
 
 		float pos = (cam.nearClipPlane + 10.0f);
