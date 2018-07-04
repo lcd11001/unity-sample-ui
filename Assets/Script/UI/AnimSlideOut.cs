@@ -38,7 +38,9 @@ public class AnimSlideOut  : Anim
         int size = item.children.Count;
         foreach(MenuItem child in item.children)
         {
-            float ratio = i * 1.0f / (size - 1);
+            float ratio = size > 1 
+                ? i * 1.0f / (size - 1)
+                : 1;
             Vector3 pos = (radius * ratio + offsetRadius) * item.direction;
             child.button.transform.localPosition = pos;
 
