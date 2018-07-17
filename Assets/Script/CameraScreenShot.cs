@@ -1,0 +1,143 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
+
+public class CameraScreenShot : MonoBehaviour
+{
+    public GameObject objFlashing;
+    public float duration;
+    public float startAlpha;
+    public float endAlpha;
+    // Update is called once per frame
+
+    private float timer, midDuration;
+    private float percent;
+    private bool isRunning;
+    private enum FLASH {
+        START_TO_END,
+        ZERO,
+        END_TO_START
+    }
+
+    private FLASH status;
+
+    public void TakeScreenShot()
+    {
+        timer = 0;
+        midDuration = duration / 2;
+        isRunning = true;
+        status = FLASH.START_TO_END;
+    }
+
+    private void Save()
+    {
+        // ScreenCapture.CaptureScreenshot("AR-" + date + ".png");
+
+
+        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
+
+        Debug.Log("platform = " + Application.platform);
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            StartCoroutine(SaveToAndroid(tex));
+        }
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
+            StartCoroutine(SaveToIos(tex));
+        }
+        else
+        {
+            StartCoroutine(SaveToPC(tex));
+        }
+        
+    }
+
+    private IEnumerator SaveToAndroid(Texture2D tex)
+    {
+        yield return new WaitForEndOfFrame();
+
+        string date = System.DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
+        string path = CameraScreenShotAndroid.SaveImageToGallery(tex, "AR-" + date + ".jpg", "AR Car Demo Screenshot");
+        Debug.Log("Image is saved to " + path);
+    }
+
+    private IEnumerator SaveToIos(Texture2D tex)
+    {
+        yield return new WaitForEndOfFrame();
+        // https://www.quora.com/How-do-you-call-native-iOS-functions-from-Unity
+        // https://stackoverflow.com/questions/30938859/unity-receive-event-from-object-c/30946257#30946257
+    }
+
+    private IEnumerator SaveToPC(Texture2D tex)
+    {
+        yield return new WaitForEndOfFrame();
+        byte[] bytes = ImageConversion.EncodeToJPG(tex, 100);
+        Destroy(tex);
+
+        string date = System.DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
+        // For testing purposes, also write to a file in the project folder
+        File.WriteAllBytes(Application.dataPath + "/../" + "AR-" + date + ".jpg", bytes);
+    }
+
+    private void Stop()
+    {
+        isRunning = false;
+        ApplyAlpha(startAlpha);
+    }
+
+    void Update()
+    {
+        if (isRunning)
+        {
+            timer += Time.deltaTime;
+
+            if (timer < duration)
+            {
+                percent = timer / midDuration;
+
+                float alpha = 0;
+                
+                switch(status)
+                {
+                    case FLASH.START_TO_END:
+                        alpha = Mathf.Lerp(startAlpha, endAlpha, percent);
+                        if (percent >= 1)
+                        {
+                            status = FLASH.ZERO;
+                        }
+                    break;
+
+                    case FLASH.END_TO_START:
+                        alpha = Mathf.Lerp(endAlpha, startAlpha, percent - 1);
+                    break;
+
+                    case FLASH.ZERO:
+                        Save();
+                        status = FLASH.END_TO_START;
+                    break;
+                }
+
+                ApplyAlpha(alpha);
+            }
+            else
+            {
+                Stop();
+            }
+        }
+    }
+
+    void ApplyAlpha(float alpha)
+    {
+        // Debug.Log("alpha " + alpha);
+        CanvasGroup canvas = objFlashing.GetComponent<CanvasGroup>();
+        if (canvas)
+        {
+            canvas.alpha = alpha;
+        }
+        else
+        {
+            Debug.LogWarning("object " + objFlashing.name + " should have CanvasGroup component");
+        }
+    }
+}
