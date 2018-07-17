@@ -34,50 +34,55 @@ public class CameraScreenShot : MonoBehaviour
     {
         // ScreenCapture.CaptureScreenshot("AR-" + date + ".png");
 
-
-        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
-
         Debug.Log("platform = " + Application.platform);
         if (Application.platform == RuntimePlatform.Android)
         {
-            StartCoroutine(SaveToAndroid(tex));
+            StartCoroutine(SaveToAndroid());
         }
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
-            StartCoroutine(SaveToIos(tex));
+            StartCoroutine(SaveToIos());
         }
         else
         {
-            StartCoroutine(SaveToPC(tex));
+            StartCoroutine(SaveToPC());
         }
         
     }
 
-    private IEnumerator SaveToAndroid(Texture2D tex)
+    private IEnumerator SaveToAndroid()
     {
         yield return new WaitForEndOfFrame();
+
+        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         string date = System.DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
         string path = CameraScreenShotAndroid.SaveImageToGallery(tex, "AR-" + date + ".jpg", "AR Car Demo Screenshot");
         Debug.Log("Image is saved to " + path);
+
+        Object.Destroy(tex);
     }
 
-    private IEnumerator SaveToIos(Texture2D tex)
+    private IEnumerator SaveToIos()
     {
         yield return new WaitForEndOfFrame();
         // https://www.quora.com/How-do-you-call-native-iOS-functions-from-Unity
         // https://stackoverflow.com/questions/30938859/unity-receive-event-from-object-c/30946257#30946257
     }
 
-    private IEnumerator SaveToPC(Texture2D tex)
+    private IEnumerator SaveToPC()
     {
+        // https://docs.unity3d.com/ScriptReference/ScreenCapture.CaptureScreenshotAsTexture.html
         yield return new WaitForEndOfFrame();
+
+        Texture2D tex = ScreenCapture.CaptureScreenshotAsTexture();
         byte[] bytes = ImageConversion.EncodeToJPG(tex, 100);
-        Destroy(tex);
 
         string date = System.DateTime.UtcNow.ToString("yyyyMMdd-HHmmss");
         // For testing purposes, also write to a file in the project folder
         File.WriteAllBytes(Application.dataPath + "/../" + "AR-" + date + ".jpg", bytes);
+        
+        Object.Destroy(tex);
     }
 
     private void Stop()
