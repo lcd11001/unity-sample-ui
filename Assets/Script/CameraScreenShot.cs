@@ -68,6 +68,8 @@ public class CameraScreenShot : MonoBehaviour
         yield return new WaitForEndOfFrame();
         // https://www.quora.com/How-do-you-call-native-iOS-functions-from-Unity
         // https://stackoverflow.com/questions/30938859/unity-receive-event-from-object-c/30946257#30946257
+        int sum = CameraScreenShotIos.Add(5, 4);
+        Debug.Log("result " + sum);
     }
 
     private IEnumerator SaveToPC()
