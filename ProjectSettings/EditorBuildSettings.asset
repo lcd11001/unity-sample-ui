@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ARCircleMenu.unity
-    guid: e540fc50b89b7b947a79bf09c2647cf5
+    path: Assets/CircleMenu.unity
+    guid: 15c8fcba375a95d40aee282947700e7f
   m_configObjects: {}

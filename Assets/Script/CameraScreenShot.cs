@@ -134,10 +134,10 @@ public class CameraScreenShot : MonoBehaviour
 
     void ApplyAlpha(float alpha)
     {
-        // Debug.Log("alpha " + alpha);
         CanvasGroup canvas = objFlashing.GetComponent<CanvasGroup>();
         if (canvas)
         {
+            // Debug.Log("alpha " + alpha);
             canvas.alpha = alpha;
         }
         else
