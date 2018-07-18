@@ -30,8 +30,9 @@ public class iOSPostProcessBuild
 
 			PlistElementString e = new PlistElementString(photoWritePermissionValue);
 			root[photoWritePermissionKey] = e;
-#endif
+
 			plist.WriteToFile(plistPath);
+#endif
         }
     }
 }
