@@ -1,4 +1,5 @@
-// https://www.youtube.com/watch?v=zP5mjHzJR-o
+// iOS plugin: https://www.youtube.com/watch?v=zP5mjHzJR-o
+// plist.info: https://www.youtube.com/watch?v=VAQriQlR95A
 
 #import <Foundation/Foundation.h>
 
@@ -38,19 +39,31 @@ static SnapShot* _instance = nullptr;
     NSLog(@"initHelper called");
 }
 
--(int) add: (int) x
-       with: (int) y
+-(void) SaveSnapShot: (NSData*) data
 {
-    return x + y;
+    UIImage* image = [UIImage imageWithData:data];
+    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image: didFinishSavingWithError: contextInfo:), nil);
+}
+
+- (void) image:(UIImage *)image
+didFinishSavingWithError:(NSError *)error
+   contextInfo:(void *)contextInfo
+{
+    if (error != nil)
+    {
+        NSLog(@"Save snap shot error %@", error.localizedDescription);
+        return;
+    }
+    NSLog(@"Save snap shot successful");
 }
 
 @end
 
 extern "C"
 {
-    int _add(int x, int y)
+    void _SaveSnapShot(Byte bytes[], int len)
     {
-        // Just a simple example of returning an int value
-        return [[SnapShot getInstance] add:x with:y];
+        NSData* data = [NSData dataWithBytesNoCopy:bytes length:len freeWhenDone:FALSE];
+        [[SnapShot getInstance] SaveSnapShot:data];
     }
 }
