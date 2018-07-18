@@ -8,6 +8,11 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 #endif
 
+// https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html
+
+// https://docs.unity3d.com/ScriptReference/iOS.Xcode.PlistElementString.html
+// https://docs.unity3d.com/ScriptReference/Callbacks.PostProcessBuildAttribute.html
+
 public class iOSPostProcessBuild
 {
     [PostProcessBuildAttribute(1)]
